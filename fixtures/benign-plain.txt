@@ -1,0 +1,6 @@
+Please summarise the attached quarterly report in about 200 words.
+
+Focus on revenue trends, the change in operating margin, and any guidance the
+company gave for the next quarter. Use plain language and avoid jargon. If a
+number seems inconsistent with the prior quarter, mention it rather than
+silently reconciling it.

@@ -1,0 +1,23 @@
+{
+  "name": "prompt-injection-scanner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Scores a prompt's maliciousness: an offline rule engine plus an optional Claude judge, merged by taking the higher score.",
+  "scripts": {
+    "scan": "tsx src/index.ts",
+    "test": "node --import tsx --test \"src/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/yargs": "^17.0.35",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.116.0",
+    "yargs": "^18.1.0",
+    "zod": "^4.4.3"
+  }
+}
