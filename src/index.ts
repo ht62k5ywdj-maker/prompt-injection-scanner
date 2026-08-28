@@ -1,8 +1,10 @@
 /** CLI wiring. All behaviour lives in the modules this imports. */
 
+import { writeFile } from "node:fs/promises";
 import Anthropic from "@anthropic-ai/sdk";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import { renderHtml } from "./html-report.ts";
 import { createJudge, DEFAULT_JUDGE_MODEL, type Judge } from "./llm.ts";
 import { renderJson, renderText } from "./report.ts";
 import { scanText } from "./scan.ts";
@@ -36,6 +38,10 @@ const argv = await yargs(hideBin(process.argv))
     type: "boolean",
     default: false,
     describe: "Machine-readable output",
+  })
+  .option("html", {
+    type: "string",
+    describe: "Write a self-contained HTML report to <path>",
   })
   .option("fail-at", {
     type: "string",
@@ -92,6 +98,11 @@ async function main(): Promise<number> {
         judge,
       }),
     );
+  }
+
+  if (argv.html) {
+    await writeFile(argv.html, renderHtml(results), "utf8");
+    process.stderr.write(`HTML report written to ${argv.html}\n`);
   }
 
   const color = argv.color ?? process.stdout.isTTY === true;

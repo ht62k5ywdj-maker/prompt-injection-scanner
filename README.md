@@ -17,6 +17,7 @@ npm run scan -- ./prompts/                  # a directory, ranked worst first
 cat suspicious.txt | npm run scan -- -      # stdin
 npm run scan -- suspicious.txt --json       # machine-readable
 npm run scan -- suspicious.txt --llm        # add the Claude judge
+npm run scan -- suspicious.txt --html report.html   # save a browsable HTML report
 ```
 
 A shell alias is the convenient way to use it from anywhere:
@@ -33,6 +34,7 @@ alias pinj='npm --prefix ~/Scripts/claude/prompt-injection-scanner run --silent 
 | `--llm` | `false` | add the Claude judge (needs API credentials) |
 | `--model` | `claude-opus-5` | judge model |
 | `--json` | `false` | machine-readable output |
+| `--html <path>` | — | write a self-contained HTML report to `<path>` |
 | `--fail-at` | `suspicious` | band at which to exit non-zero |
 | `--max-bytes` | `1048576` | per-file size cap |
 | `--no-color` | auto | disable ANSI colour |
@@ -62,6 +64,11 @@ critical hit still lands high on its own. Repeated hits of the *same* rule
 collapse into one finding with a count: a payload repeating one phrase twenty
 times is not twenty times more malicious. Hits spanning three or more categories
 get a small corroboration bonus.
+
+The `--html` report additionally shows an A–F letter grade — A is safest, F is
+most dangerous. It's a cosmetic re-slicing of the same four bands (the wide
+`suspicious` band splits into C and D) and does not change the underlying
+score or `--fail-at` behavior.
 
 ### Rule categories
 
